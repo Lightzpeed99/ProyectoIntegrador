@@ -130,17 +130,17 @@ void main() {
   Lcd_Init();                        // Initialize LCD
   Lcd_Cmd(_LCD_CLEAR);               // Clear display
   Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
-  Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
   ADC_Init();
   cnfTMR0();
   while(1){
+     Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
      if(opcConfirmar == 0) {//
        if(UPBot && banderaUp==0){
           banderaUp = 1;
           opcMuestrear = 1;
           opcMostrar = 0;
           txt = "MuestreoXtiempo";
-          Lcd_Out(1,1,txt);
+          Lcd_Out(2,1,txt);
           Delay_ms(20);
        }
        if(!UPBot && banderaUp==1){
@@ -149,6 +149,7 @@ void main() {
        if(OKBot && banderaOk==0){
           banderaOk = 1;
           opcConfirmar = 1;
+          Lcd_Cmd(_LCD_CLEAR);               // Clear display
           Lcd_Out(1,2,"Opcion selecc");
           Lcd_Out(2,1,txt);
           Delay_ms(20);
@@ -161,7 +162,7 @@ void main() {
           opcMuestrear = 0;
           opcMostrar = 1;
           txt = "Mostrar muestras";
-          Lcd_Out(1,1,txt);
+          Lcd_Out(2,1,txt);
           Delay_ms(20);
        }
        if(!DOWNBot && banderaDown==1){
@@ -175,13 +176,17 @@ void main() {
           initTMR0();//Arranca timer
           Muestrear();
           GuardarEEPROM();
+          Lcd_Cmd(_LCD_CLEAR);               // Clear display
+          Lcd_Out(1,1,"Muestreo");
+          Lcd_Out(2,1,"Completa");
        }else{
           Mostrar();
+          Lcd_Cmd(_LCD_CLEAR);               // Clear display
+          Lcd_Out(1,1,"Visualizacion");
+          Lcd_Out(2,1,"Completa");
        }
        resetAll();
        Lcd_Cmd(_LCD_CLEAR);               // Clear display
-       Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
-       Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
     }
   }
 }
