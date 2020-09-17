@@ -130,10 +130,11 @@ void main() {
   Lcd_Init();                        // Initialize LCD
   Lcd_Cmd(_LCD_CLEAR);               // Clear display
   Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
+  Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
+  Delay_ms(20);
   ADC_Init();
   cnfTMR0();
   while(1){
-     Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
      if(opcConfirmar == 0) {//
        if(UPBot && banderaUp==0){
           banderaUp = 1;
@@ -178,7 +179,7 @@ void main() {
           GuardarEEPROM();
           Lcd_Cmd(_LCD_CLEAR);               // Clear display
           Lcd_Out(1,1,"Muestreo");
-          Lcd_Out(2,1,"Completa");
+          Lcd_Out(2,1,"Completo");
        }else{
           Mostrar();
           Lcd_Cmd(_LCD_CLEAR);               // Clear display
@@ -187,6 +188,8 @@ void main() {
        }
        resetAll();
        Lcd_Cmd(_LCD_CLEAR);               // Clear display
+       Lcd_Out(1,1,"Proyecto Integr.");                 // Write text in first row
+       Delay_ms(20);
     }
   }
 }
