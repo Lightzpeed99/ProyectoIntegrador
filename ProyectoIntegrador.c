@@ -48,6 +48,15 @@ void main() {
      if(!UPBot && banderaUp==1){
         banderaUp=0;
      }
+     if(OKBot && banderaOk==0){
+        banderaOk = 1;
+        Lcd_Out(1,2,"Opcion selecc.");
+        Lcd_Out(2,1,txt);
+        Delay_ms(20);
+     }
+     if(!OKBot && banderaOk==1){
+        banderaOk=0;
+     }
      if(DOWNBot && banderaDown==0){
         banderaDown = 1;
         txt = "Mostrar muestras";
