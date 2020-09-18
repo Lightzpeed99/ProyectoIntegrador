@@ -33,11 +33,6 @@ int segundos = 0;
 int timing = 0;
 int horas = 0;
 
-char *hrs = "hrs[  ]";
-char *min = "min[  ]";
-char *seg = "seg[  ]";
-char *time = "tiempo: ";
-
 char *txt;
 char *encabezado = "ProyectoInt";
 char *muestreo = "Muestreo";
