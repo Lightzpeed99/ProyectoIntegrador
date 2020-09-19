@@ -69,6 +69,7 @@ adon
 adon_bit
 adresh
 adresl
+animacion
 ans0
 ans0_bit
 ans1
@@ -117,6 +118,7 @@ bclif
 bclif_bit
 bf
 bf_bit
+bndanimacion
 boot16_delay_5ms
 brg0
 brg0_bit
@@ -258,6 +260,9 @@ ckp_bit
 cm1con0
 cm2con0
 cm2con1
+cnftiempolcd
+cnt
+cntuser
 comfrem
 compare_double
 cren
@@ -282,6 +287,7 @@ dc2b0
 dc2b0_bit
 dc2b1
 dc2b1_bit
+decena
 delay_100ms
 delay_10ms
 delay_10us
@@ -296,6 +302,7 @@ delay_5ms
 delay_80us
 delay_8ms
 delay_cyc
+desp
 div_16x16_s
 div_16x16_s_l
 div_16x16_u
@@ -309,7 +316,7 @@ double2int
 double2longint
 double2longword
 double2word
-downbot
+downbtn
 eccpas
 eccpas0
 eccpas0_bit
@@ -335,6 +342,7 @@ eepgd_bit
 eeprom_read
 eeprom_write
 equals_double
+espacio
 f
 ferr
 ferr_bit
@@ -354,17 +362,22 @@ go_done
 go_done_bit
 go_not_done
 go_not_done_bit
+guardareeprom
+horas
 hts
 hts_bit
+i
 ics_auto
 ics_off
 indf
+inittmr0
 int2double
 intcon
 inte
 inte_bit
 intedg
 intedg_bit
+interrupt
 intf
 intf_bit
 iocb
@@ -392,6 +405,7 @@ ircf2
 ircf2_bit
 irp
 irp_bit
+j
 lcd_chr
 lcd_chr_cp
 lcd_cmd
@@ -410,6 +424,7 @@ lcd_out
 lcd_out_cp
 lcd_rs
 lcd_rs_direction
+lect
 longint2double
 longword2double
 lts
@@ -419,6 +434,8 @@ mc1out
 mc1out_bit
 mc2out
 mc2out_bit
+minutos
+mostrar
 msk
 msk0
 msk0_bit
@@ -436,6 +453,7 @@ msk6
 msk6_bit
 msk7
 msk7_bit
+muestrear
 mul_16x16_s
 mul_16x16_u
 mul_32x32_fp
@@ -475,7 +493,8 @@ nrm3232
 nrm4032
 oerr
 oerr_bit
-okbot
+okbtn
+opcion
 option_reg
 osccon
 osctune
@@ -523,6 +542,7 @@ portc
 portd
 porte
 pr2
+procesarvalor
 prsen
 prsen_bit
 ps0
@@ -666,6 +686,7 @@ re3_bit
 read_write
 read_write_bit
 res032
+resetall
 rp0
 rp0_bit
 rp1
@@ -685,6 +706,7 @@ sckp_bit
 scs
 scs_bit
 sdiv3232l
+segundos
 sen
 sen_bit
 sendb
@@ -774,6 +796,8 @@ t2ckps0_bit
 t2ckps1
 t2ckps1_bit
 t2con
+tiempo
+timing
 tmr0
 tmr0ie
 tmr0ie_bit
@@ -798,6 +822,7 @@ tmr2if
 tmr2if_bit
 tmr2on
 tmr2on_bit
+tope
 toutps0
 toutps0_bit
 toutps1
@@ -927,7 +952,8 @@ ulpwuie
 ulpwuie_bit
 ulpwuif
 ulpwuif_bit
-upbot
+upbtn
+valor
 vcfg0
 vcfg0_bit
 vcfg1

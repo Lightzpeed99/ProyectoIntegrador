@@ -1,0 +1,6 @@
+[PROJECTS]
+Count=2
+Project0=..\uart1\MyProject.mcppi
+Project1=ProyectoIntegrador.mcppi
+[ActiveProject]
+Index=1

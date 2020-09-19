@@ -1,8 +1,9 @@
 0	1	mikroCPIC1618.exe -MSF -DBG -pP16F887 -GC -DL -O11111115 -fo8 -N"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\ProyectoIntegrador.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "ProyectoIntegrador.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_ADC_88X.mcl" "__Lib_EEPROM.mcl" "__Lib_UART_c67.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl"	 
 diagnostics: 0	122	Compilation Started	ProyectoIntegrador.c
-diagnostics: 61	123	Compiled Successfully	ProyectoIntegrador.c
-diagnostics: 0	127	All files Compiled in 187 ms	 
+diagnostics: 325	123	Compiled Successfully	ProyectoIntegrador.c
+diagnostics: 0	127	All files Compiled in 234 ms	 
+0	0		
 diagnostics: 0	125	Project Linked Successfully	ProyectoIntegrador.mcppi
-diagnostics: 0	128	Linked in 547 ms	 
-diagnostics: 0	129	Project 'ProyectoIntegrador.mcppi' completed: 765 ms	 
-diagnostics: 0	103	Finished successfully: 17 sep. 2020, 16:22:03	ProyectoIntegrador.mcppi
+diagnostics: 0	128	Linked in 1047 ms	 
+diagnostics: 0	129	Project 'ProyectoIntegrador.mcppi' completed: 1328 ms	 
+diagnostics: 0	103	Finished successfully: 18 sep. 2020, 19:01:24	ProyectoIntegrador.mcppi
