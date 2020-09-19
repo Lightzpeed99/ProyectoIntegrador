@@ -12,8 +12,7 @@ sbit LCD_D4_Direction at TRISB5_bit;
 sbit LCD_D5_Direction at TRISB4_bit;
 sbit LCD_D6_Direction at TRISB3_bit;
 sbit LCD_D7_Direction at TRISB2_bit;
-// End LCD module connections
-//Para botones
+
 sbit UPBtn at RC0_bit;
 sbit OKBtn at RC1_bit;
 sbit DOWNBtn at RC2_bit;
@@ -21,59 +20,88 @@ sbit DOWNBtn at RC2_bit;
 int banderaUp = 0;
 int banderaOk = 0;
 int banderaDown = 0;
-//Para opciones
 int opcion = 0;
+int espacio = 0;
+int desp = 0;
+int decena = 0;
+int minutos = 0;
+int segundos = 0;
+int timing = 0;
+int horas = 0;
 
-char *txt;
-int lect = 0;
-unsigned int valor = 0;
+short lectura;
+int ultimo = 0;
+
+int cmpTope;
+int cmpData;
+int recorre;
+
+int valor = 0;
 unsigned long cnt = 0;
 unsigned long cntUser = 0;
 unsigned long tiempo = 0;
-unsigned int segundos=0;
-unsigned int minutos=0;
-unsigned int horas=0;
-int timing = 0;
-int decena = 0;
-int espacio = 0;
-int animacion = 0;
-int bndAnimacion = 0;
+int increm =0;
 
 //Variables para mecánica de los métodos
 int i = 0;
-int tope = 0;
-int j = 0;//indice de la eep
-int desp = 0;
+int tope = 0; //tiempo definido por el usuario para muestrear
+int j = 0;
+int captura = 0;
+
+//-------------------------------------------------------------------------------
+
+void muestrear();
 
 void resetAll(){       //Se resetean todas las variables
+    cntUser = 0;
     banderaUp = 0;
     banderaOk = 0;
     banderaDown = 0;
     opcion = 0;
-    lect = 0;
+    i = 0;
+    tope = 0;
     valor = 0;
     cnt =0;
     tiempo = 0;
-    cntUser = 0;
-    segundos = 0;
-    minutos = 0;
-    horas = 0;
-    timing = 0;
-    decena = 0;
-    espacio = 0;
-    i = 0;
-    tope = 0;
     j = 0;
-    desp = 0;
+}
+
+void Title(){
+    Lcd_Cmd(_LCD_CLEAR);               // Clear display
+    Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
+    Lcd_Out(1,1,"proyect-muestreo");                 // Write text in first row
+    Delay_ms(500);
 }
 
 void initTMR0(){//Arranca el TMR0
-  OPTION_REG = 0x82;
-  TMR0  = 6;
-  INTCON = 0xA0;
+  OPTION_REG         = 0x82;
+  TMR0                 = 6;
+  INTCON         = 0xA0;
 }
 
+void interrupt(){
+  if (TMR0IF_bit){
+    cnt++;
+    TMR0IF_bit         = 0;
+    TMR0                 = 6;
+    //Enter your code here
+    if(cnt>1000){
+       cntUser++;
+       RB0_bit=~RB0_bit;
+       cnt=0;
+    }
+    if(cntUser==tope){
+           RB1_bit=~RB1_bit;
+           OPTION_REG         = 0x00;
+           TMR0                 = 0;
+           INTCON         = 0x00;
+    }
 
+  }
+
+}
+
+// CAPTURAR TIEMPOS DE MUESTREO DEFINIDOS POR USUARIO
 void procesarValor(int opc){
    espacio = 48+valor;
    if(espacio == 58){//si valor excede el 9, significa que se hará uso del espacio en blanco a la derecha
@@ -101,7 +129,7 @@ void procesarValor(int opc){
    //se carga con -16, para que al sumarse con 48, se genere el valor 32 que es un espacio en blanco en ASCII
       decena = -16;
    }
-   
+
    switch(opc){
       case 1://horas
       Lcd_Chr(1,13,decena+48);
@@ -128,22 +156,23 @@ void procesarValor(int opc){
       segundos = decena*10+valor;
       break;
    }
-   Delay_ms(100);
+   Delay_ms(200);
 }
 
+//CAPTURA TIEMPOS A MUESTREAR TMR0
 void cnfTiempoLcd(){//Captura tiempo a muestrear (TMR0)
   timing = 1;
   desp = 0;
   Lcd_Cmd(_LCD_CLEAR);               // Clear display
-  //Delay_ms(100);
+  Delay_ms(50);
   //Imprime plantillas de tiempo
-  Lcd_Out(1,1,"Tiempo: ");
+  Lcd_Out(1,1,"time: ");
   Delay_ms(50);
-  Lcd_Out(1,9,"Hrs[  ]");
+  Lcd_Out(1,9,"hrs[  ]");
   Delay_ms(50);
-  Lcd_Out(2,1,"Min[  ]");
+  Lcd_Out(2,1,"min[  ]");
   Delay_ms(50);
-  Lcd_Out(2,9,"Seg[  ]");
+  Lcd_Out(2,9,"seg[  ]");
   Delay_ms(50);
   valor = 0;
   while(timing != 4){//timing sirve para saber en qué unidad de tiempo se está ajustando el parámetro
@@ -151,6 +180,7 @@ void cnfTiempoLcd(){//Captura tiempo a muestrear (TMR0)
        banderaUp = 1;
        valor++;
        procesarValor(timing);//dependiendo de la carga, lo procesa y lo pasa a caracter imprimible por la lcd
+       Delay_ms(50);
     }
     if(!UPBtn && banderaUp==1){
        banderaUp=0;
@@ -170,6 +200,7 @@ void cnfTiempoLcd(){//Captura tiempo a muestrear (TMR0)
        banderaDown = 1;
        valor--;
        procesarValor(timing);//dependiendo de la carga, lo procesa y lo pasa a caracter imprimible por la lcd
+       Delay_ms(50);
     }
     if(!DOWNBtn && banderaDown==1){
        banderaDown=0;
@@ -178,109 +209,73 @@ void cnfTiempoLcd(){//Captura tiempo a muestrear (TMR0)
   tope = horas*360+minutos*60+segundos;
 }
 
-void GuardarEEPROM(){
-    //PROMEDIO(Array);
-    //Tecnica(ConversionFloatAInt);//Extrae número a número y lo guarda en EEPROM
-    //EEPROM[0]=EEPROM[0]+1;
-    //EEPROM_Write(0,0);
-}
-
-void Muestrear(){//Dentro del while, la i representa el tiempo que se irá incrementando en la interrupción del
-//TMR0 y el tope, los segundos/minutos ajustados por el usuario
-//FUNCION ESCLAVA DE LA INTERRUPCIÓN DE TIMER 0
-   RB0_bit = ~RB0_bit;
+void muestrear(){
+     RB0_bit=~RB0_bit;
 }
 
 void Mostrar(){//Dentro del while, la i representa el índice de la memoria eeprom que se irá incrementando cada que
-//encuentra el caracter '*' y el tope representa la cantidad de muestras que se tienen almacenadas
-   //txt = "Mostrando data";
-   Lcd_Out(1,1,"Mostrando data");
-   delay_ms(300);
-   //tope = EEPROM_Read(0); // capacidad es de 0 a 255 decimal
-   tope = 0;
-   i = 0;
-   j = 1;//se va moviendo en las direcciones de eeprom 1-255 direcciones, Inicia en 1, porque la direccion 0
-   //Es el tope o la cantidad de muestras que se han hecho
-   cnt = 6;
-   while(i<tope){
-      lect = EEPROM_Read(j);
-      j++;
-      if(lect != 7){
-         Lcd_Chr(2,cnt,lect);
-      }else{
-         Lcd_Chr(2,cnt,'.');
-      }
-      cnt++;
-      if(lect == '*'){
-        i++;
-        Lcd_Chr_CP('V');
-        cnt = 6;
-        Delay_ms(1000);
-        Lcd_Cmd(_LCD_CLEAR);
-        Lcd_Out(1,1,txt);
-      }
-   }
+     cmpTope = 1;
+     cmpData = 1;
+     recorre = 1;
+     Lcd_Cmd(_LCD_CLEAR);
+          while(cmpTope <= 4){
+             while(cmpData <= 5){
+                if(cmpData==2){
+                   Lcd_Out(2,4+cmpData,".");
+                   Delay_ms(50);
+                }else{
+                   Lcd_Chr(2,4+cmpData,48+EEPROM_Read(recorre));
+                   Delay_ms(100);
+                   recorre++;
+                }
+                //Delay_ms(1000);
+                cmpData++;
+             }
+             Lcd_Out(2,10,"V");
+             Delay_ms(500);
+             cmpTope++;
+          }
 }
 
-void interrupt(){
-  if (TMR0IF_bit){
-    cnt++;
-    TMR0IF_bit = 0;
-    TMR0 = 6;
-    //Enter your code here
-    if(cnt>1000){
-       cntUser++;
-       muestrear();
-       cnt=0;
-    }
-    if(cntUser==tope){
-       RB1_bit=~RB1_bit;
-       OPTION_REG = 0x00;
-       TMR0 = 0;
-       INTCON = 0x00;
-    }
-  }
-}
+//------------------------------------------------------------------------------
 
 void main() {
   ANSEL  = 255;                     // Configure AN pins as digital
   ANSELH = 0;
   TRISA = 0b00001101;
   TRISC = 0b10000111;
-  TRISB0_bit = 0;
-  TRISB1_bit = 0;
+  TRISD = 0x00;
+  PORTD = 0;
+  TRISB0_bit=0;
+  TRISB1_bit=0;
   PORTB = 0;
-  //UART1_Init(9600);               // Initialize UART module at 9600 bps
+  UART1_Init(9600);               // Initialize UART module at 9600 bps
   Delay_ms(100);                  // Wait for UART module to stabilize
   //UART1_Write_Text("Start");
   Lcd_Init();                        // Initialize LCD
   Lcd_Cmd(_LCD_CLEAR);               // Clear display
-  Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
-  Lcd_Chr(1,1,'P');
-  Lcd_Chr_CP('r');
-  Lcd_Chr_CP('o');
-  Lcd_Chr_CP('y');
-  Lcd_Chr_CP('e');
-  Lcd_Chr_CP('c');
-  Lcd_Chr_CP('t');
-  Lcd_Chr_CP('o');
-  //Lcd_Out(1,1,"Proyecto Integr");                 // Write text in first row
-  Delay_ms(500);
+  /*Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
+  Lcd_Out(1,1,"proyect-muestreo");                 // Write text in first row
+  Delay_ms(500);*/
+  Title();
   ADC_Init();
+
+  //ciclo principal
   while(1){
-    //Lcd_Out(1,1,"Proyecto Integr.");
-    if(UPBtn && banderaUp==0){
+    if(UPBtn && banderaUp==0){ //muestra opcion muestrear en el manu
        banderaUp = 1;
        opcion = 1;
-       txt = "Sample by time";
-       Lcd_Out(2,1,txt);
+       Lcd_Out(2,1,"muestrear");
        Delay_ms(500);
+
     }
     if(!UPBtn && banderaUp==1){
        banderaUp=0;
     }
-    if(OKBtn && banderaOk==0){
+    if(OKBtn && banderaOk==0){ //cuando alguna opcion del menu se selecciona
        banderaOk = 1;
+       Lcd_Cmd(_LCD_CLEAR);
+       Delay_ms(20);
     }
     if(!OKBtn && banderaOk==1){
        banderaOk=1;
@@ -288,38 +283,60 @@ void main() {
     if(DOWNBtn && banderaDown==0){
        banderaDown = 1;
        opcion = 2;
-       //txt = "View samples  ";
-       Lcd_Out(2,1,"View samples  ");
+
+       Lcd_Out(2,1,"visualizar");
        Delay_ms(500);
     }
-    if(!DOWNBtn && banderaDown==1){
+    if(!DOWNBtn && banderaDown==1){ // opcion de Mostrar muestreos guardados
        banderaDown=0;
     }
+    
+    //aqui entra una vez seleccionado una opcion del menu
     if(banderaOk == 1){
-       if(opcion == 1){
-          cnfTiempoLcd();//Captura tiempo ajustado por el usuario, pasa ese valor a términos de tope
-          initTMR0();//Arranca timer, va implícito dentro de la interrupción Muestrear();
-          Lcd_Cmd(_LCD_CLEAR);
-          Lcd_Out(1,3,"Muestreando");
-          Lcd_Out(2,7,"...");
-          while(cntUser<tope){
+       if(opcion == 1){//si la opcion elegida fue Muestrear un determinado tiempo
+          cnfTiempoLcd();
+          //Delay_ms(100);
+          initTMR0();//Arranca timer
+          
+          //muestreos x segundo
+          ultimo = 5;
+          while(cntUser < tope){
+                     Lcd_Cmd(_LCD_CLEAR);
+                     Lcd_Out(1,1,"trabajando");
+                     Delay_ms(200);
           }
-          //GuardarEEPROM();
-          Lcd_Cmd(_LCD_CLEAR);               // Clear display
-          Lcd_Out(1,1,"muestreo");
-          Delay_ms(50);
-          Lcd_Out(2,1,"completo");
-       }else if(opcion == 2){
+       
+       //prueba de almacenamiento eeprom para probar visualizacion
+          lectura=1;
+          while(lectura<=16){
+          EEPROM_Write(0x00+lectura,lectura);
+          lectura++;
+          }
+       
+          EEPROM_Write(0x00,0x00+4);
+
+             //GuardarEEPROM();
+             //RB1_bit=~RB1_bit;
+             Lcd_Cmd(_LCD_CLEAR);
+             Delay_ms(200);
+             Lcd_Out(1,1,"muestreo");
+             Delay_ms(50);
+             Lcd_Out(2,1,"listo");
+             Delay_ms(300);
+             RB0_bit=0;
+             RB1_bit=0;
+             
+
+       }else if(opcion == 2){// si la opcion elegida es mostrar los muestreos guardados
           Mostrar();
-          Lcd_Cmd(_LCD_CLEAR);               // Clear display
+          Lcd_Cmd(_LCD_CLEAR);
+          Delay_ms(200);
           Lcd_Out(1,1,"vista");
           Delay_ms(50);
           Lcd_Out(2,1,"completa");
        }
-       Delay_ms(500);
        resetAll();
-       Lcd_Cmd(_LCD_CLEAR);               // Clear display
-       Lcd_Out(1,1,"Proyecto Integr");                 // Write text in first row
+       Title();
     }
   }
 }

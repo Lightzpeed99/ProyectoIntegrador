@@ -46,7 +46,9 @@ File1=Lcd
 File2=Lcd_Constants
 File3=EEPROM
 File4=ADC
-Count=5
+File5=Conversions
+File6=C_String
+Count=7
 [EXPANDED_NODES]
 Count=0
 [LIB_EXPANDED_NODES]
