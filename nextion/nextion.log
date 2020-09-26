@@ -1,8 +1,18 @@
-0	1	mikroCPIC1618.exe -MSF -DBG -pP16F887 -GC -DL -O11111115 -fo8 -N"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\PI\nextion.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\PI\" -SP"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\nextion\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "nextion.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_Conversions.mcl" "__Lib_Sprinti.mcl" "__Lib_UART_c67.mcl"	 
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F887 -DL -O11111114 -fo8 -N"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\nextion\nextion.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dell\Desktop\TIPOS DE DATOS\ProyectoIntegrador\nextion\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "nextion.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_Conversions.mcl" "__Lib_Sprinti.mcl" "__Lib_ADC_88X.mcl" "__Lib_EEPROM.mcl" "__Lib_UART_c67.mcl"	 
+hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
 diagnostics: 0	122	Compilation Started	nextion.c
-diagnostics: 97	123	Compiled Successfully	nextion.c
-diagnostics: 0	127	All files Compiled in 141 ms	 
+warning: 136	1505	Suspicious pointer conversion	nextion.c
+warning: 138	1508	Implicit conversion of int to ptr	nextion.c
+warning: 138	1508	Implicit conversion of int to ptr	nextion.c
+warning: 138	1508	Implicit conversion of int to ptr	nextion.c
+warning: 140	1505	Suspicious pointer conversion	nextion.c
+warning: 141	1508	Implicit conversion of int to ptr	nextion.c
+warning: 240	1509	Generated baud rate is 9615 bps (error = 0.16 percent)	nextion.c
+diagnostics: 259	123	Compiled Successfully	nextion.c
+diagnostics: 0	127	All files Compiled in 187 ms	 
+hint: 0	1144	Used RAM (bytes): 167 (47%)  Free RAM (bytes): 185 (53%)	Used RAM (bytes): 167 (47%)  Free RAM (bytes): 185 (53%)
+hint: 0	1144	Used ROM (program words): 3971 (48%)  Free ROM (program words): 4221 (52%)	Used ROM (program words): 3971 (48%)  Free ROM (program words): 4221 (52%)
 diagnostics: 0	125	Project Linked Successfully	nextion.mcppi
-diagnostics: 0	128	Linked in 531 ms	 
-diagnostics: 0	129	Project 'nextion.mcppi' completed: 719 ms	 
-diagnostics: 0	103	Finished successfully: 22 sep. 2020, 11:44:21	nextion.mcppi
+diagnostics: 0	128	Linked in 219 ms	 
+diagnostics: 0	129	Project 'nextion.mcppi' completed: 453 ms	 
+diagnostics: 0	103	Finished successfully: 26 sep. 2020, 13:56:16	nextion.mcppi

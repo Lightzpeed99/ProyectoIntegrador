@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=..\nextion\nextion.c
+Value=nextion.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -16,7 +16,7 @@ Value=0
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-File0=..\nextion\nextion.c
+File0=nextion.c
 Count=1
 [BINARIES]
 Count=0
@@ -24,7 +24,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-File0=..\nextion\nextion.c
+File0=nextion.c
 Count=1
 [EEPROM]
 Count=0
@@ -33,8 +33,7 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Path0=..\nextion\
-Count=1
+Count=0
 [HEADER_PATH]
 Count=0
 [HEADERS]
@@ -47,7 +46,10 @@ File1=C_String
 File2=UART
 File3=Sprinti
 File4=C_Type
-Count=5
+File5=ADC
+File6=EEPROM
+File7=C_Stdlib
+Count=8
 [EXPANDED_NODES]
 Count=0
 [LIB_EXPANDED_NODES]
@@ -61,11 +63,13 @@ Count=0
 92=C_Stdlib
 106=C_String
 132=C_Type
+145=EEPROM
 148=EPSON_S1D13700
 181=FLASH
 184=Glcd
 215=I2C
 231=Keypad4x4
+235=Lcd
 243=Manchester
 253=MemManager
 259=One_Wire
@@ -87,9 +91,11 @@ Count=0
 491=Sprinti
 494=Sprintl
 497=T6963C
+525=Time
 528=TouchPanel
 537=Trigonometry
-Count=38
+540=UART
+Count=42
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]
