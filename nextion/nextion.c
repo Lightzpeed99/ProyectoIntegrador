@@ -3,7 +3,7 @@ sbit OKBtn at RC1_bit;
 sbit DOWNBtn at RC2_bit;
 
 signed char trama[30];//vector para guarda la trama Recibida
-char envia[30];
+signed char envia[30];
 char valor[2];
 char cuenta = 0;//contador de datos que llegan
 char flag_rx = 0;//bandera de que la nextion mando info
@@ -41,12 +41,14 @@ int desp = 0;
 
 unsigned long Voltaje = 0;
 unsigned long tlong = 0;
-char ch;
+char ch = 0;
 int VoltInt = 0;
 
 //variables para debuggueo por UART1
 char txtLong[10];
 char text[3];
+
+void mover_Graph();
 
 void resetAll(){       //Se resetean todas las variables
     cuenta = 0;//contador de datos que llegan
@@ -77,6 +79,11 @@ void resetAll(){       //Se resetean todas las variables
     tope = 0;
     j = 0;
     desp = 0;
+    memset(envia,0,30);
+    memset(trama,0,30);
+    memset(txtLong,0,10);
+    memset(valor,0,2);
+    memset(text,0,3);
 }
 
 void initTMR0(){//Arranca el TMR0
@@ -104,7 +111,7 @@ void interrupt(){
     }
     cuenta++;//incrementa contador o puntero del vectro de recibido
     //si es mayor que 30 debe limpiar la bandera y reiniciar el contador llego al maximo
-    if (cuenta == 30){
+    if (cuenta >= 30){
       flag_rx = 0;
       cuenta = 0;
       flag_mv = 0;
@@ -131,39 +138,50 @@ void interrupt(){
 
 //TRATAMIENTO DE SEÑAL
 void procesa_Rx(){
-  if (flag_rx == 1){//si la bandera de la trama esta activa
+  //if (flag_rx == 1){//si la bandera de la trama esta activa
     //BITS DE RESIDUO POTENCIOMETRO
-    if (strstr(trama,"t=")){
-      flag_mv = 1;
-      tope = atoi(trama[2]<<16)+atoi(trama[3]<<8)+atoi(trama[4]);
+    if(flag_rx == 1){
+      for(i=0;i<30;i++){
+          mover_Graph();
+        if(trama[i]=='t'){
+          flag_mv = 1;
+          flag_end = 1;
+          i = 30;
+          tope = atoi(trama[2]<<16)+atoi(trama[3]<<8)+atoi(trama[4]);
+        }
+      }
     }
+    /*if (strstr(trama,"t=")){
+      flag_mv = 1;
+      flag_end = 0;
+      tope = atoi(trama[2]<<16)+atoi(trama[3]<<8)+atoi(trama[4]);
+    }*/
     if(strstr(trama,"b=")){
       der = atoi(trama[2]);
     }
+    //flag_mv = 1;
+    //flag_end = 0;
     memset(trama,0,30);
     cuenta = 0;  //limpia el contador
     flag_rx = 0; //limpia la bandera
     PIR1.F5 = 0; //limpia la bandera de interrpcion
     CREN_bit = 1;
     INTCON.F7 = 1;
-  }
+  //}
 }
 
 void mover_Graph(){
-  //for(i = 0; i<255; i++){
+  for(i = 0; i<255; i++){
   // 657 -D 10 bits
   //  255 -D 8 bits
-  lect = ADC_Read(0);
-    i = (unsigned int)(lect*255)/1023;//10 bits A 8 bits
-    sprinti(envia,"add 8,0,");
-    UART1_Write_Text(envia);
-    sprinti(envia,"%d",i);
-    UART1_Write_Text(envia);
-    manda_serial_const("\xFF\xFF\xFF");
-    Voltaje+=i;
-    //sprinti(envia,"adc: %d",i);
-    //UART1_Write_Text(envia);
-  //}
+  //VoltInt = 0;
+  //lect = ADC_Read(0);
+  //VoltInt = (lect*255)/1023;//10 bits A 8 bits
+  //sprinti(envia,"add 8,0,%d",VoltInt);
+  sprinti(envia,"add 8,0,%d",i);
+  UART1_Write_Text(envia);
+  manda_serial_const("\xFF\xFF\xFF");
+  }
 }
 
 void Mostrar(){// Dependiendo de la cantidad de muestras almacenadas en EEPROM, las desplegará en la LCD, una cada segundo
@@ -196,7 +214,7 @@ void Mostrar(){// Dependiendo de la cantidad de muestras almacenadas en EEPROM, 
    inttostr(lect,envia);
    UART1_Write_Text(envia);
    UART1_Write_Text("V\"");
-    manda_serial_const("\xFF\xFF\xFF");
+   manda_serial_const("\xFF\xFF\xFF");
 }
 
 void GuardarEEPROM(){
@@ -236,17 +254,37 @@ void main(){
   PORTC = 0;
   PORTB = 0;
   PORTE = 0;
-  cuenta = 0;
+  resetALL();
   UART1_Init(9600);
-  memset(envia,0,30);
   ADC_Init();
   //habilita int serial
   PIR1.F5 = 0;
   PIE1.F5 = 1;
   INTCON.F6 = 1;
   INTCON.F7 = 1;
+  manda_serial_const("cle 8,0");
+  manda_serial_const("\xFF\xFF\xFF");
   while(1){
-    if(flag_rx){
+    procesa_Rx();
+    //flag_mv = 1;
+    //flag_end=0;
+    //if(flag_mv==1 && flag_end==0){
+       //mover_Graph();
+    //}else if(flag_end){
+      // GuardarEEPROM();
+       //flag_end = 0;
+    //}
+    /*if(cnt == 999){
+      INTCON.F7 = 0;
+      sprinti(envia,"Capture.timeCapture.val=%d",cntUser);
+      UART1_Write_Text(envia);
+      manda_serial_const("\xFF\xFF\xFF");
+      INTCON.F7 = 1;
+    }*/
+    //manda_serial_const("Timming.txtHrs.txt=\"Hola world :v\"");
+    //manda_serial_const("\xFF\xFF\xFF");
+    //Delay_ms(100);
+    /*if(flag_rx){
       procesa_Rx();
     }
     if(flag_mv){
@@ -254,6 +292,6 @@ void main(){
     }else if(flag_end){
       guardarEEPROM();
       resetAll();
-    }
+    }     */
   }
 }

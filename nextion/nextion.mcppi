@@ -1,6 +1,6 @@
 [DEVICE]
 Name=P16F887
-Clock=8000000
+Clock=16000000
 [MEMORY_MODEL]
 Value=0
 [BUILD_TYPE]
@@ -12,9 +12,12 @@ Value=0
 [USE_HEAP]
 Value=0
 [HEAP_SIZE]
-Value=0
+Value=2000
 [EEPROM_DEFINITION]
 Value=
+[INTERRUPT_DEFS]
+VECTOR_MODE=0
+IVT_BASE=00000008
 [FILES]
 File0=nextion.c
 Count=1
@@ -51,7 +54,8 @@ File6=EEPROM
 File7=C_Stdlib
 Count=8
 [EXPANDED_NODES]
-Count=0
+0=nextion.mcppi
+Count=1
 [LIB_EXPANDED_NODES]
 0=mikroE Libraries
 1=System Libraries
@@ -95,7 +99,7 @@ Count=0
 528=TouchPanel
 537=Trigonometry
 540=UART
-Count=42
+Count=43
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]
