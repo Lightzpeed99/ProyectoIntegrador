@@ -1,0 +1,15 @@
+ÀÄproyectoIntegrador
+   ÃÄMAIN  0/105  Ram=1
+   ³  ÃÄ??0??
+   ³  ÃÄresetAll  0/20  Ram=0
+   ³  ³  ÃÄ@MEMSET  0/9  Ram=0
+   ³  ³  ÀÄ@MEMSET  0/9  Ram=0
+   ³  ÃÄ@delay_ms1  0/20  Ram=1
+   ³  ÃÄ@delay_ms1  0/20  Ram=1
+   ³  ÀÄmover_Graph  0/118  Ram=0
+   ³     ÃÄ@delay_ms1  0/20  Ram=1
+   ³     ÃÄ@PSTRINGCN_9600_62_63  (Inline)  Ram=3
+   ³     ÀÄ@PRINTF_U_9600_62_63  (Inline)  Ram=2
+   ³        ÃÄ@DIV88  0/21  Ram=3
+   ³        ÀÄ@DIV88  0/21  Ram=3
+   ÀÄinterrupt  0/58  Ram=2

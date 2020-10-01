@@ -1,0 +1,5 @@
+>>> Warning 225 "proyectoIntegrador.c" Line 15(13,26): Duplicate #define
+>>> Warning 203 "proyectoIntegrador.c" Line 149(1,1): Condition always TRUE
+>>> Warning 202 "proyectoIntegrador.c" Line 49(14,21): Variable never used:   flag_rx
+      Memory usage:   ROM=5%      RAM=23% - 24%
+      0 Errors,  3 Warnings.

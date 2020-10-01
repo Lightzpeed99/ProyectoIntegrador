@@ -1,0 +1,61 @@
+
+ROM used: 412 (5%)
+          412 (5%) including unused fragments
+
+          0 Average locations per line
+          1 Average locations per statement
+
+RAM used: 84 (23%) at main() level
+          90 (24%) worst case
+
+Stack used: 3 worst case (out of 8 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  158    61  11  proyectoIntegrador.c
+  425     0   0  16F887.h
+  163     0   0  stdint.h
+ 1273   359  66  stdlib.h
+   28     0   0  stddef.h
+  409   121  22  string.h
+   28     0   0  ctype.h
+  409     0   0  STRING.h
+----- -----
+ 2893   541 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     20   5   1             @delay_ms1
+0     20   5   0   132  2.2  resetAll
+0      9   2   0             @MEMSET
+0     58  14   2   522  6.3  interrupt
+0    118  29   0    66  1.8  mover_Graph
+0     14   3   0             @const383
+ Inline        3             @PSTRINGCN_9600_62_63
+0     21   5   3             @DIV88
+ Inline        2             @PRINTF_U_9600_62_63
+0    105  25   1   519  2.9  MAIN
+
+Program metrics:
+    Functions               4
+    Statements              541
+    Comments                958
+    Volume (V)              1654
+    Difficilty (D)          12.7
+    Effort to implement (E) 20940
+    Time to implement (T)   19 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   4
+    Maintainability (MI)    14
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-0002E    43  0  
+0002F-007FF   365  1636  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+
